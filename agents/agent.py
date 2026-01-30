@@ -25,4 +25,10 @@ def non_tech_agent(client):
         instructions="Write the technical fix non-technically, user friendly for customers.."
     )
 
-# commenting here to check whether branching and merging is working
+# Adding agent that will work as a tool 
+def research_tool_agent(client):
+    return ChatAgent(
+        chat_client=client,
+        name = "Researcher",
+        instructions="Provide factual data points for any requested topic"
+    )
