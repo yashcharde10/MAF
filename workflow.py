@@ -2,19 +2,28 @@ import asyncio
 from agents.agent import tech_agent, non_tech_agent, research_tool_agent
 from dotenv import load_dotenv
 from brain import groq_ai_client
+from agent_framework.exceptions import ServiceResponseException
 
 
 async def work_flow(user_problem):
+    try:
+        load_dotenv()
+        client = groq_ai_client()
 
-    load_dotenv()
-    client = groq_ai_client()
+        # initiaizing the tool agent 
+        researcher = research_tool_agent(client)
 
-    # initiaizing the tool agent 
-    researcher = research_tool_agent(client)
+        # Loading the agents
+        writer = tech_agent(client, tools=[researcher])
+        editor = non_tech_agent(client)
+    
+    except ServiceResponseException:
+        
+        return "Check connectivity", ""
+    except Exception as e:
+        
+        return f"An unexpected error occurred: {str(e)}", ""
 
-    # Loading the agents
-    writer = tech_agent(client)
-    editor = non_tech_agent(client)
 
     
 
@@ -25,6 +34,8 @@ async def work_flow(user_problem):
 
     print(f"Technical draft: {draft_text}\n")
     tool = [researcher]
+
+    
 
 
 
