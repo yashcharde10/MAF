@@ -19,18 +19,22 @@ async def work_flow(user_problem):
     
 
     # 1. Technical writer will work here
-    print("Tech writer is working ...")
+    
     draft_response = await writer.run(f"use the researcher tool while answering the problem : {user_problem}")
     draft_text = draft_response.text
+
     print(f"Technical draft: {draft_text}\n")
     tool = [researcher]
 
+
+
     # 2. Non technical --> editor will work here 
-    print("Non Technical --> editor is working here")
-    final_response = f"please polish this technical draft : {draft_text}"
-    non_tech_draft = await editor.run(final_response)
+    
+    final_prompt = f"please polish this technical draft : {draft_text}"
+    non_tech_draft = await editor.run(final_prompt)
     non_tech_draft_text = non_tech_draft.text
     print(f"The user friendly reponse is here : {non_tech_draft_text}")
 
-if __name__ == "__main__":
-    asyncio.run(work_flow())
+
+    
+    return draft_text, non_tech_draft_text

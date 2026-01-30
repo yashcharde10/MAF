@@ -3,6 +3,7 @@ from brain import groq_ai_client
 from agents.agent import tech_agent, non_tech_agent
 from dotenv import load_dotenv
 import asyncio 
+from workflow import work_flow
 
 
 # Page configuration 
@@ -11,25 +12,16 @@ st.title("Assistant for Engineers")
 st.write("Enter your technical problem here")
 
 async def logic(user_input):
-    load_dotenv()
-    client = groq_ai_client()
+    draft, final = await work_flow(user_input)
 
-    writer = tech_agent(client)
-    editor = non_tech_agent(client)
+    with st.status("Technical solution...", expanded=True):
+        st.write(draft)
 
-    with st.status("Here is Technical solution...", expanded=True):
-        draft_response = await writer.run(user_input)
-        draft_text = draft_response.text
-        st.write(f"Solution: \n {draft_text}")
+    with st.status("Non-technical editor...", expanded=True):
+        st.write(final)
 
-    # this is final work
-    with st.status("Non technical editor is writing the draft...", expanded=True):
-        final_prompt = f"Polish the technical draft: {draft_text}"
-        final_response = await editor.run(final_prompt)
-        final_response_text = final_response.text
-        st.write(f"Solution: {final_response_text}")
+    return "Hope we solved your Problem!"
 
-    return "We hope that your problem is resolved!"
 
 # INPUT LOGIC
 
