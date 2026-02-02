@@ -1,11 +1,29 @@
 import asyncio
-from agents.agent import tech_agent, non_tech_agent, research_tool_agent, quality_checker
+from agents.agent import main_agent
+from agents.tools import tech_agent, non_tech_agent, quality_checker, research_tool_agent
 from dotenv import load_dotenv
 from brain import groq_ai_client
 from agent_framework.exceptions import ServiceResponseException
 import re 
 
+async def work_flow(user_problem):
+    try:
+        load_dotenv()
+        client = groq_ai_client()
 
+        # Initialize the Main Agent
+        master_agent = main_agent
+
+        print("Master Agent is starting...")
+
+        response = await master_agent.run(user_problem)
+
+        return "Below is the solution :  ", response.text  
+    
+    except Exception as e:
+        return f"Error: {str(e)}", ""
+
+"""
 async def work_flow(user_problem):
     try:
         load_dotenv(override=True)
@@ -69,3 +87,5 @@ async def work_flow(user_problem):
         return draft_text, final_response.text
 
     return draft_text, non_tech_draft_text
+
+"""
