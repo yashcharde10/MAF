@@ -25,7 +25,7 @@ def tech_agent(client, tools=None):
             "4. CRITICAL RULE: If the request is non-technical (e.g., recipes, lifestyle, general chat), "
             "you must respond with exactly this phrase and nothing else: 'Please enter a technical question.'"
         ),
-        tools=research_tool_agent
+        tools=tools
     )
     
 # 2. Non Technical Agent --> explaining error to customer 
@@ -52,4 +52,17 @@ def research_tool_agent(client):
         chat_client=client,
         name = "Researcher",
         instructions="Provide factual data points for any requested topic"
+    )
+
+# Adding agent for Quality Checking
+def quality_checker(client):
+    return ChatAgent(
+        chat_client=client,
+        name = "Checker",
+        instructions=(
+            "Act as a ruthless UX Copy Editor. Rate the input on a scale of 1-10 based on: "
+            "1. Jargon-Free (0 technical terms), 2. Empathy, and 3. Conciseness. "
+            "OUTPUT FORMAT: 'Score: [x]/10 | Critique: [1 short sentence]'. "
+            "If the score is below 8, identify the specific technical word to remove."
+        )
     )

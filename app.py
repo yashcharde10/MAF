@@ -12,7 +12,7 @@ st.title("Assistant for Engineers")
 st.write("Enter your technical problem here")
 
 async def logic(user_input):
-    draft, final = await work_flow(user_input)
+    draft, final= await work_flow(user_input)
 
     with st.status("Technical solution...", expanded=True):
         st.write(draft)
