@@ -64,7 +64,7 @@ async def work_flow(user_problem):
         correction_prompt = f"Your previous draft got a low score. Critique: {check_draft.text}. Please rewrite it to be more empathetic and simple."
         final_response = await editor.run(correction_prompt)
         
-    
+    #thread 
         
         return draft_text, final_response.text
 
