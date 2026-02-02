@@ -1,47 +1,20 @@
 from agent_framework import ChatAgent
-from agents.prompts import TECH_WRITER_INSTRUCTIONS, NON_TECH_WRITER_INSTRUCTIONS, QUALITY_CHECKER_INSTRUCTIONS, RESEARCHER_INSTRUCTIONS
+from agents.prompts import (TECH_WRITER_INSTRUCTIONS, NON_TECH_WRITER_INSTRUCTIONS,
+                             QUALITY_CHECKER_INSTRUCTIONS, RESEARCHER_INSTRUCTIONS)
+from agents.tools import tech_agent, non_tech_agent, quality_checker, research_tool_agent
 
-def ai_agent(client):
-    return ChatAgent(
-        chat_client = client,
-        name = "Support Learner",
-        instructions = "You are a helpful assistant. Keep your answers short."
-    )
+# MAIN AGENT 
 
-# We will be making here two different agents 
+def main_agent(client):
+    # Initializing the SUB AGENTS
+    tech_tool = tech_agent(client)
+    non_tech_tool = non_tech_agent(client)
+    checker = quality_checker(client)
+    researcher = research_tool_agent(client)
 
-# 1. Technical Agent --> returning the technical issue
-def tech_agent(client, tools=None):
-    return ChatAgent(
-        chat_client = client,
-        name = "Tech_writer",
-        
-        instructions = TECH_WRITER_INSTRUCTIONS,
-        tools=tools
-    )
-    
-# 2. Non Technical Agent --> explaining error to customer 
-def non_tech_agent(client):
-    return ChatAgent(
-        chat_client = client,
-        name = "Non_Tech_Writer",
-        
-        instructions=NON_TECH_WRITER_INSTRUCTIONS
-    )
-    
-
-# Adding agent that will work as a tool 
-def research_tool_agent(client):
     return ChatAgent(
         chat_client=client,
-        name = "Researcher",
-        instructions=RESEARCHER_INSTRUCTIONS
-    )
-
-# Adding agent for Quality Checking
-def quality_checker(client):
-    return ChatAgent(
-        chat_client=client,
-        name = "Checker",
-        instructions=QUALITY_CHECKER_INSTRUCTIONS
+        name = "Main_Agent",
+        instructions="Pending",
+        tools=[tech_tool, non_tech_tool, checker, researcher]
     )
