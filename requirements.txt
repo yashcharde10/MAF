@@ -1,0 +1,10 @@
+# Requirements:
+
+streamlit
+groq
+sqlalchemy
+python-dotenv
+asyncio
+
+# Ensure you have the agent-framework installed if it is a local or specific library
+# If it's a folder in your repo, you don't need to add it here.
