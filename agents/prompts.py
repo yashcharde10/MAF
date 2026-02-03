@@ -7,6 +7,13 @@ MAIN_AGENT_INSTRUCTIONS = (
     "3. Call 'quality_checker' to ensure the final text is high quality. "
     "4. If the checker gives a score below 8, ask 'customer_editor' to fix it based on the critique. "
     "5. Provide only the final polished solution to the user."
+    "CRITICAL: After all tool calls are finished, your FINAL response to the user must be "
+    "the text provided by the 'customer_editor'. DO NOT end the conversation with a tool call; "
+    "you must provide the final text as your own output."
+    "6. Provide only the final polished solution to the user."
+    "\n\nCRITICAL: Once you have the final polished text from 'customer_editor' and it has "
+    "passed the 'quality_checker', you MUST repeat that final text in your own response "
+    "to the user. Do not just stop after a tool call."
 )
 
 # instruction for technical tool

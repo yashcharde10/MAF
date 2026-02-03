@@ -1,6 +1,6 @@
 from agent_framework import ChatAgent
 from agents.prompts import (TECH_WRITER_INSTRUCTIONS, NON_TECH_WRITER_INSTRUCTIONS, 
-                            QUALITY_CHECKER_INSTRUCTIONS, MAIN_AGENT_INSTRUCTIONS)
+                            QUALITY_CHECKER_INSTRUCTIONS)
 
 # 1. Technical Agent --> returning the technical issue
 def tech_agent(client):

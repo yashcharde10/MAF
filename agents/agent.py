@@ -1,10 +1,8 @@
 from agent_framework import ChatAgent
-from agents.prompts import (TECH_WRITER_INSTRUCTIONS, NON_TECH_WRITER_INSTRUCTIONS,
-                             QUALITY_CHECKER_INSTRUCTIONS, MAIN_AGENT_INSTRUCTIONS)
+from agents.prompts import  MAIN_AGENT_INSTRUCTIONS
 from agents.tools import tech_agent, non_tech_agent, quality_checker
 
 # MAIN AGENT 
-
 def main_agent(client):
     # Initializing the SUB AGENTS [TOOLS]
     tech_tool = tech_agent(client)

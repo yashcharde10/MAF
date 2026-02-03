@@ -18,15 +18,11 @@ async def logic(user_input):
         st.write(draft)
         st.divider()
         st.markdown(f"Final Solution\n{final}")
-
-    return "Process Completed !"
-
-"""
-    with st.status("Non-technical editor...", expanded=True):
         st.write(final)
 
-    return "Hope we solved your Problem!"
-"""
+    return final
+
+
 
 # INPUT LOGIC
 
@@ -36,6 +32,6 @@ if st.button("Generate Solution"):
     if user_problem:
         with st.spinner("Agent is working..."):
             result = asyncio.run(logic(user_problem))
-            st.success(result)
+            st.success()
     else:
         st.warning("Please enter the problem first.")

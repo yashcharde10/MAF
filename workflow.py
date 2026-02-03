@@ -16,9 +16,11 @@ async def work_flow(user_problem):
         print("Master Agent is starting...")
 
         response = await master_agent.run(user_problem)
-        print(response.text)
-
-        return "Below is the solution :  ", response.text  
+    
+        # DEBUG PRINT: Look at your terminal when you run the app
+        print(f"DEBUG: RAW RESPONSE: {response}") 
+    
+        return "Below is the solution:", response.text
     
     
     except Exception as e:
