@@ -12,6 +12,10 @@ st.set_page_config(page_icon="🤖", page_title="AI Agent", layout="centered")
 st.title("Assistant for Engineers")
 st.write("Enter your technical problem here")
 
+# Initialize thread in session state
+if "agent_thread" not in st.session_state:
+    st.session_state.agent_thread = None
+
 # Initializing the session state --> this helps to keep the chats on screen when session starts
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -42,7 +46,9 @@ if prompt := st.chat_input("Describe your technical issue..."):
         with st.status("Solving your problem...", expanded=False) as status:
             st.write("Orchestrating agents...")
             # Run your workflow
-            _, final_response = asyncio.run(work_flow(prompt))
+            final_response, updated_thread = asyncio.run(work_flow(prompt, thread=st.session_state.agent_thread))
+            # Update the session state with the thread containing history
+            st.session_state.agent_thread = updated_thread
             status.update(label="Solution Generated!", state="complete", expanded=False)
         
         # Display the final answer
@@ -57,4 +63,3 @@ with st.sidebar:
         st.rerun()
     
     st.info("Your responses are being saved.")
-

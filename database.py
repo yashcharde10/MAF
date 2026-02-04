@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, Column, String, create_engine, Text, DateTime
+from sqlalchemy import Integer, Column, String, create_engine, Text, DateTime, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import datetime
@@ -16,7 +16,9 @@ class ChatHistory(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_query = Column(Text)
     ai_response = Column(Text)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    timestamp = Column(DateTime, default=func.now())
+    # we are saving thread_id for memory 
+    thread_id = Column(Text)
 
 def init_db():
     Base.metadata.create_all(bind=engine)
